@@ -16,6 +16,8 @@ var setup = function() {
 }
 
 var draw = function() {
+  // check neighboors
+
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       var index = i + j * cols;
