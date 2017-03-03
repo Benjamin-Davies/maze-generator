@@ -1,10 +1,10 @@
-var rows, cols, w = 2;
+var rows, cols, w = 20, drawRout = false;
 var cells = [], stack = [];
 
 var x = 0, y = 0, ci = 0, loop = true;
 
 var setup = function() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(380, 380);
   background(0);
 
   rows = floor(height / w);
@@ -50,7 +50,7 @@ var draw = function() {
       y = n.y;
       ci = n.i;
 
-      if (cols - x <= 2 && rows - y <= 2) {
+      if (cols - x <= 2 && rows - y <= 2 && drawRout) {
         push();
         noFill();
         stroke(255, 0, 0);
