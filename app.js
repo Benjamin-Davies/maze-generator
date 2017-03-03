@@ -1,10 +1,10 @@
-var rows, cols, w = 8;
-var cells = [], stack = [], path = [];
+var rows, cols, w = 2;
+var cells = [], stack = [];
 
 var x = 0, y = 0, ci = 0, loop = true;
 
 var setup = function() {
-  createCanvas(640, 320);
+  createCanvas(window.innerWidth, window.innerHeight);
   background(0);
 
   rows = floor(height / w);
@@ -14,10 +14,14 @@ var setup = function() {
     cells.push(1);
   }
   cells[ci] = 0;
+
+  noStroke();
+  fill(255);
+  rect(0, 0, w, w);
 }
 
 var draw = function() {
-  for (var k = 0; k < 1; k++) {
+  for (var k = 0; k < 1000; k++) {
     // check neighboors
     var neighboors = [];
     for (i = -2; i <= 2; i += 2) {
@@ -37,53 +41,42 @@ var draw = function() {
     if (neighboors.length > 0) {
       var i = floor(random() * neighboors.length);
       var n = neighboors[i];
-      cells[(n.i + ci) / 2] = 0;
+      //cells[(n.i + ci) / 2] = 0;
       cells[n.i] = 0;
+      rect(w * n.x, w * n.y, w, w);
+      rect(w * (n.x + x) / 2, w * (n.y + y) / 2, w, w);
       stack.push({ x: x, y: y, i: ci });
       x = n.x;
       y = n.y;
       ci = n.i;
 
-      if (x == cols - 2 && y == rows - 2)
-        stack.forEach(function (n2) { path.push(n2); })
+      if (cols - x <= 2 && rows - y <= 2) {
+        push();
+        noFill();
+        stroke(255, 0, 0);
+        strokeWeight(w/2);
+        translate(w / 2, w / 2);
+        beginShape();
+        stack.forEach(function (n) {
+          vertex(n.x * w, n.y * w);
+        });
+        vertex(
+          ceil(cols / 2 - 1) * 2 * w,
+          ceil(rows / 2 - 1) * 2 * w);
+        endShape();
+        pop();
+      }
     } else {
       var n = stack.pop();
       if (!n) {
         console.log("Finished");
         noLoop();
+        return;
       } else {
         x = n.x;
         y = n.y;
         ci = n.i;
       }
     }
-  }
-
-  noStroke();
-  fill(255);
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      var index = i + j * cols;
-      if (!cells[index])
-        rect(w * i, w * j, w, w);
-    }
-  }
-  
-  fill('lime');
-  rect(w * x, w * y, w, w);
-  
-  if (path.length > 0) {
-    push();
-    noFill();
-    stroke(255, 0, 0);
-    strokeWeight(3/4*w);
-    translate(w / 2, w / 2);
-    beginShape();
-    path.forEach(function (n) {
-      vertex(n.x * w, n.y * w);
-    });
-    vertex(width - 2*w, height - 2*w)
-    endShape();
-    pop();
   }
 }
