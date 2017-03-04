@@ -4,7 +4,35 @@ var cells = [], stack = [];
 var x = 0, y = 0, ci = 0, loop = true;
 
 var setup = function() {
-  createCanvas(380, 380);
+  createCanvas(380, 380).parent("canvascontainer");
+  
+  try {
+    // http://stackoverflow.com/questions/6539761/window-location-search-query-as-json
+    var params = location.search;
+    params = "{\"" + params.replace(/\?/gi, "").replace(/\&/gi, "\",\"").replace(/\=/gi, "\":\"") + "\"}";
+    params = JSON.parse(params);
+
+    var dif = int(params.dif);
+
+    switch (dif) {
+      case 1:
+        w = 15;
+        resizeCanvas(375, 375);
+        document.getElementById("dif").innerText = "Medium";
+        break;
+      case 2:
+        w = 10;
+        resizeCanvas(390, 390);
+        document.getElementById("dif").innerText = "Hard";
+        break;
+      case 3:
+        w = 5;
+        resizeCanvas(395, 395);
+        document.getElementById("dif").innerText = "Super Hard";
+        break;
+    }
+  } catch (e) { }
+
   background(0);
 
   rows = floor(height / w);

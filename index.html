@@ -13,10 +13,21 @@
     <script src="p5.min.js"></script>
     <script src="app.js"></script>
     <h1>Maze Generator</h1>
+    <h2 id="dif">Easy</h2>
     <h3>By Benjamin Davies</h3>
     <p>
-      Uses recursive backtracker
-      <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker">Wikipedia</a>
-    </p>
+    Uses recursive backtracker
+    <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker">Wikipedia</a>
+    <p id="canvascontainer">
+    <form method="GET">
+      <select name="dif">
+        <option value="0" selected>Easy</option>
+        <option value="1">Medium</option>
+        <option value="2">Hard</option>
+        <option value="3">Super Hard</option>
+      </select>
+      <input type="submit" value="Generate">
+    </form>
+    <p>
   </body>
 </html>
